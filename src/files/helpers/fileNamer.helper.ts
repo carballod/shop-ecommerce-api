@@ -9,7 +9,7 @@ export const fileNamer = (
   if (!file) return callback(new Error('File is empty'), false);
 
   const fileExtension = file.mimetype.split('/')[1];
-  const fileName = `${file.originalname}-${uuid()}.${fileExtension}`;
+  const fileName = `${uuid()}.${fileExtension}`;
 
   callback(null, fileName);
 };
