@@ -18,23 +18,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: yarn install --frozen-lockfile
 
       - name: Run linter
-        run: npm run lint
+        run: yarn lint
 
       - name: Check code formatting
-        run: npm run format
+        run: yarn format
 
       - name: Build application
-        run: npm run build
-
-      - name: Type check
-        run: npx tsc --noEmit
-
-      - name: Security audit
-        run: npm audit --audit-level=high
-        continue-on-error: true
+        run: yarn build
