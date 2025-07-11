@@ -60,6 +60,20 @@ export class AuthService {
     };
   }
 
+  async checkAuthStatus(user: User) {
+    if (!user) throw new BadRequestException('User not found');
+
+    const userResponse = {
+      id: user.id,
+      email: user.email,
+    };
+
+    return {
+      ...userResponse,
+      token: this.getJwtToken({ id: user.id }),
+    };
+  }
+
   private getJwtToken(payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
     return token;
