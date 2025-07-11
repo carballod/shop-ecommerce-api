@@ -34,5 +34,8 @@ jobs:
       - name: Check code formatting
         run: yarn format
 
+      - name: TypeScript compilation check
+        run: yarn tsc --noEmit
+
       - name: Build application
         run: yarn build
