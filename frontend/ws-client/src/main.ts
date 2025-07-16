@@ -1,3 +1,4 @@
+import { connectToServer } from './socket-client';
 import './style.css';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -6,3 +7,5 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <span>offline</span>
   </div>
 `;
+
+connectToServer();
