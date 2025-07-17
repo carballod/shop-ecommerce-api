@@ -11,13 +11,23 @@ export const connectToServer = () => {
 const addListeners = (socket: Socket) => {
   const serverStatusLabel =
     document.querySelector<HTMLSpanElement>('#server-status')!;
+  const clientsUl = document.querySelector<HTMLUListElement>('#clients-ul')!;
 
-  // Todo: #clients-ul
   socket.on('connect', () => {
     serverStatusLabel.innerText = 'connected';
   });
 
   socket.on('disconnect', () => {
     serverStatusLabel.innerText = 'disconnected';
+  });
+
+  socket.on('clients-updated', (clients: string[]) => {
+    let clientsHtml = '';
+
+    clients.forEach((clientId) => {
+      clientsHtml += `<li>${clientId}</li>`;
+    });
+
+    clientsUl.innerHTML = clientsHtml;
   });
 };

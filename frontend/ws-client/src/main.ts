@@ -7,9 +7,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <span id="server-status">offline</span>
 
     <ul id="clients-ul">
-      <li>Open the console to see the logs</li>
-      <li>Check the server status above</li>
-      <li>Ensure the server is running on port 3000</li>
     </ul>
   </div>
 `;
