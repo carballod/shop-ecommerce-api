@@ -36,7 +36,7 @@ jobs:
         run: yarn format
 
       - name: Backend TypeScript compilation check
-        run: yarn tsc --noEmit src/**/*.ts test/**/*.ts
+        run: yarn tsc --noEmit
 
       - name: Build backend application
         run: yarn build
