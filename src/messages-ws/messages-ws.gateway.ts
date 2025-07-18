@@ -10,6 +10,7 @@ import { Server, Socket } from 'socket.io';
 
 import { MessagesWsService } from './messages-ws.service';
 import { NewMessageDto } from 'src/messages-ws/dtos/new-message.dto';
+import { JwtPayload } from 'src/auth/interfaces';
 
 @WebSocketGateway({ cors: true })
 export class MessagesWsGateway
@@ -22,16 +23,20 @@ export class MessagesWsGateway
     private readonly jwtService: JwtService,
   ) {}
 
-  handleConnection(client: Socket) {
+  async handleConnection(client: Socket) {
     const token = client.handshake.headers.authentication as string;
+    let payload: JwtPayload;
+
     try {
-      this.jwtService.verify(token);
+      payload = this.jwtService.verify(token);
+
+      await this.messagesWsService.registerClient(client, payload.id);
     } catch (error) {
       client.disconnect();
       return;
     }
 
-    this.messagesWsService.registerClient(client);
+    // console.log({ payload });
 
     this.webSocketServer.emit(
       'clients-updated',
@@ -62,7 +67,7 @@ export class MessagesWsGateway
     // });
 
     this.webSocketServer.emit('message-from-server', {
-      fullName: 'Yo!',
+      fullName: this.messagesWsService.getUserFullName(client.id),
       message: payload.message || 'no message',
     });
   }
